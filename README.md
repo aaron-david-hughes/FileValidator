@@ -94,7 +94,7 @@ graph TD;
 </h2>
 <p>
     The below diagram indicates the flow of validation 
-    of json files character by character:
+    of binary files character by character:
 </p>
 
 ```mermaid
