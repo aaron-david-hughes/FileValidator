@@ -1,7 +1,7 @@
 package validation.registry;
 
-import validation.machines.binary.BinaryTuringMachine;
-import validation.machines.json.JsonTuringMachine;
+import validation.machines.BinaryTuringMachine;
+import validation.machines.JsonTuringMachine;
 import validation.states.BinaryState;
 import validation.states.JsonState;
 import validation.validator.Validator;
@@ -23,11 +23,11 @@ public class FileTypeRegistry {
     }
 
     public static Validator removeFileType(String fileType) {
-        return REGISTRY.get(fileType);
+        return REGISTRY.remove(fileType);
     }
 
     static {
         REGISTRY.put("json", new Validator(new JsonTuringMachine(), JsonState.START));
-        REGISTRY.put("binary", new Validator(new BinaryTuringMachine(), BinaryState.START));
+        REGISTRY.put("bin", new Validator(new BinaryTuringMachine(), BinaryState.START));
     }
 }

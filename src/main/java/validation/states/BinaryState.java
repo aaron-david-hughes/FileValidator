@@ -8,17 +8,12 @@ public enum BinaryState implements State {
         }
     },
     ONE(),
-    START(),
     REJECT(),
+    START(),
     ZERO();
 
     @Override
-    public State getStartState() {
-        return START;
-    }
-
-    @Override
-    public State getRejectState() {
+    public BinaryState getRejectState() {
         return REJECT;
     }
 }

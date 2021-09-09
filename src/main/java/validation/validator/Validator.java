@@ -20,14 +20,18 @@ public class Validator {
         this.startState = startState;
     }
 
-    public boolean validate(File json) throws FileNotFoundException {
-        try (Scanner sc = new Scanner(json)) {
+    public boolean validate(File contents) throws FileNotFoundException {
+        if (contents == null) throw new IllegalArgumentException("Contents may not be null");
+
+        try (Scanner sc = new Scanner(contents)) {
             return runStateMachine(sc);
         }
     }
 
-    public boolean validate(String json) {
-        try (Scanner sc = new Scanner(json)) {
+    public boolean validate(String contents) {
+        if (contents == null) throw new IllegalArgumentException("Contents may not be null");
+
+        try (Scanner sc = new Scanner(contents)) {
             return runStateMachine(sc);
         }
     }

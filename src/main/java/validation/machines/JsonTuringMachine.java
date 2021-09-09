@@ -1,6 +1,5 @@
-package validation.machines.json;
+package validation.machines;
 
-import validation.machines.TuringMachine;
 import validation.states.JsonState;
 import validation.states.State;
 
@@ -22,6 +21,28 @@ public class JsonTuringMachine implements TuringMachine {
 
     public Map<State, Function<Character, State>> getStateMachine() {
         return new HashMap<>(stateMachine);
+    }
+
+    public Stack<String> getNestingLevel() {
+        Stack<String> copy = new Stack<>();
+        String[] contents = new String[nestingLevel.size()];
+
+        int stackInitialSize = nestingLevel.size();
+        for (int i = 0; i < stackInitialSize; i++) {
+            String s = nestingLevel.pop();
+            contents[i] = s;
+        }
+
+        for (int i = contents.length - 1; i >= 0; i--) {
+            nestingLevel.push(contents[i]);
+            copy.push(contents[i]);
+        }
+
+        return copy;
+    }
+
+    public boolean isKey() {
+        return isKey;
     }
 
     /*
@@ -165,13 +186,9 @@ public class JsonTuringMachine implements TuringMachine {
     private JsonState isKeyRequired() {
         if (nestingLevel.peek().equals(OBJECT)) {
             return JsonState.KEY;
-        }
-
-        if (nestingLevel.peek().equals(ARRAY)) {
+        } else {
             return JsonState.STRING;
         }
-
-        return reject();
     }
 
     private JsonState reject() {

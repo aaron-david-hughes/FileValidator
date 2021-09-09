@@ -2,7 +2,7 @@ package validation.states;
 
 public enum JsonState implements State {
 
-    ACCEPT() {
+    ACCEPT("Contents are valid") {
         @Override
         public boolean isAccept() {
             return true;
@@ -17,7 +17,7 @@ public enum JsonState implements State {
     HAS_NEXT('{', '[', '"'),
     KEY("either missing closing tag or a non-escaped character is present"),
     OBJECT_ELEMENT_START('"', '}'),
-    REJECT(),
+    REJECT("Content is invalid"),
     START('{', '['),
     STRING("either missing closing tag or a non-escaped character is present"),
     VALUE('{', '[', '"'),
@@ -28,17 +28,12 @@ public enum JsonState implements State {
 
     JsonState(char... possibleChars) {
         this.possibleChars = possibleChars;
-        this.msg = "Refer to possible chars for possible solution";
+        this.msg = "Refer to suggested chars for possible solution";
     }
 
     JsonState(String msg) {
         this.possibleChars = null;
         this.msg = msg;
-    }
-
-    @Override
-    public JsonState getStartState() {
-        return START;
     }
 
     @Override

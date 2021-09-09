@@ -1,8 +1,6 @@
-package validation.machines.binary;
+package validation.machines;
 
-import validation.machines.TuringMachine;
 import validation.states.BinaryState;
-import validation.states.JsonState;
 import validation.states.State;
 
 import java.util.HashMap;
@@ -36,7 +34,7 @@ public class BinaryTuringMachine implements TuringMachine {
 
         stateMachine.put(BinaryState.ONE, TRANSITIONS);
 
-        stateMachine.put(JsonState.ACCEPT, c -> BinaryState.REJECT);
+        stateMachine.put(BinaryState.ACCEPT, c -> BinaryState.REJECT);
 
         stateMachine.put(BinaryState.REJECT, c -> BinaryState.REJECT);
     }
