@@ -39,23 +39,17 @@ public class FileTypeRegistryTest {
     }
 
     @Test
-    public void addFileTypeRegistersAnotherValidator() {
-        FileTypeRegistry.addFileType("test", validator);
+    public void addFileTypeRegistersAnotherValidatorUsingLowercase() {
+        String[] fileTypes = {"test", "TEST"};
 
-        registry = FileTypeRegistry.getRegistry();
+        for (String fileType : fileTypes) {
+            FileTypeRegistry.addFileType(fileType, validator);
 
-        assertEquals(3, registry.size());
-        assertEquals(validator, registry.get("test"));
-    }
+            registry = FileTypeRegistry.getRegistry();
 
-    @Test
-    public void addFileTypeRegistersAnotherValidatorIgnoringUppercase() {
-        FileTypeRegistry.addFileType("TEST", validator);
-
-        registry = FileTypeRegistry.getRegistry();
-
-        assertEquals(3, registry.size());
-        assertEquals(validator, registry.get("test"));
+            assertEquals(3, registry.size());
+            assertEquals(validator, registry.get("test"));
+        }
     }
 
     @Test
@@ -78,25 +72,20 @@ public class FileTypeRegistryTest {
     }
 
     @Test
-    public void removeFileTypeUnregistersValidatorIfPresent() {
-        registry = FileTypeRegistry.getRegistry();
-        assertEquals(2, registry.size());
+    public void removeFileTypeUnregistersValidatorIfPresentUsingLowercase() {
+        String[] fileTypes = {"bin", "BIN"};
 
-        FileTypeRegistry.removeFileType("bin");
+        for (String fileType : fileTypes) {
+            registry = FileTypeRegistry.getRegistry();
+            assertEquals(2, registry.size());
 
-        registry = FileTypeRegistry.getRegistry();
-        assertEquals(1, registry.size());
-    }
+            FileTypeRegistry.removeFileType(fileType);
 
-    @Test
-    public void removeFileTypeUnregistersValidatorIfPresentIgnoringUppercase() {
-        registry = FileTypeRegistry.getRegistry();
-        assertEquals(2, registry.size());
+            registry = FileTypeRegistry.getRegistry();
+            assertEquals(1, registry.size());
 
-        FileTypeRegistry.removeFileType("BIN");
-
-        registry = FileTypeRegistry.getRegistry();
-        assertEquals(1, registry.size());
+            after();
+        }
     }
 
     @Test
