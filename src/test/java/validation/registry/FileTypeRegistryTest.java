@@ -49,6 +49,25 @@ public class FileTypeRegistryTest {
     }
 
     @Test
+    public void addFileTypeRegistersAnotherValidatorIgnoringUppercase() {
+        FileTypeRegistry.addFileType("TEST", validator);
+
+        registry = FileTypeRegistry.getRegistry();
+
+        assertEquals(3, registry.size());
+        assertEquals(validator, registry.get("test"));
+    }
+
+    @Test
+    public void addFileTypeIgnoresAnotherValidatorIfRegisteringUnderNull() {
+        FileTypeRegistry.addFileType(null, validator);
+
+        registry = FileTypeRegistry.getRegistry();
+
+        assertEquals(2, registry.size());
+    }
+
+    @Test
     public void removeFileTypeDoesNothingIfNoValidatorFound() {
         Validator removedValidator = FileTypeRegistry.removeFileType("not present");
 
@@ -67,6 +86,28 @@ public class FileTypeRegistryTest {
 
         registry = FileTypeRegistry.getRegistry();
         assertEquals(1, registry.size());
+    }
+
+    @Test
+    public void removeFileTypeUnregistersValidatorIfPresentIgnoringUppercase() {
+        registry = FileTypeRegistry.getRegistry();
+        assertEquals(2, registry.size());
+
+        FileTypeRegistry.removeFileType("BIN");
+
+        registry = FileTypeRegistry.getRegistry();
+        assertEquals(1, registry.size());
+    }
+
+    @Test
+    public void removeFileTypeDoesNotUnregisterValidatorIfNull() {
+        registry = FileTypeRegistry.getRegistry();
+        assertEquals(2, registry.size());
+
+        FileTypeRegistry.removeFileType(null);
+
+        registry = FileTypeRegistry.getRegistry();
+        assertEquals(2, registry.size());
     }
 
     @Test

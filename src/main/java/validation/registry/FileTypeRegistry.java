@@ -19,11 +19,13 @@ public class FileTypeRegistry {
     }
 
     public static void addFileType(String fileType, Validator validator) {
-        REGISTRY.put(fileType, validator);
+        if (fileType !=  null) REGISTRY.put(fileType.toLowerCase(), validator);
     }
 
     public static Validator removeFileType(String fileType) {
-        return REGISTRY.remove(fileType);
+        if (fileType == null) return null;
+
+        return REGISTRY.remove(fileType.toLowerCase());
     }
 
     static {
