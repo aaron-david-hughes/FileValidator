@@ -24,7 +24,7 @@ public class FileValidation {
     public static boolean runValidation(File contents) throws FileNotFoundException, FileTypeException {
         if (contents == null) throw new IllegalArgumentException("Contents may not be null");
 
-        String fileType = getFileExtension(contents.getName()).orElse("");
+        String fileType = getFileExtension(contents.getName()).orElse(" ");
 
         try {
             return FileTypeRegistry.getRegistry().get(fileType.toLowerCase()).validate(contents);

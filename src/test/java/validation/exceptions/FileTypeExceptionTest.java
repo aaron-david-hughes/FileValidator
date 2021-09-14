@@ -14,10 +14,17 @@ public class FileTypeExceptionTest {
     }
 
     @Test
-    public void fileTypeExceptionMessageShouldBeGenericWhenExtensionEmpty() {
-        FileTypeException e = new FileTypeException("");
+    public void fileTypeExceptionMessageShouldBeGenericWhenExtensionActiveWhitespace() {
+        FileTypeException e = new FileTypeException(" ");
 
         assertEquals("No file extension specified", e.getMessage());
+    }
+
+    @Test
+    public void fileTypeExceptionMessageShouldBeSpecificWhenExtensionEmpty() {
+        FileTypeException e = new FileTypeException("");
+
+        assertEquals("No validator registered for file extension ''", e.getMessage());
     }
 
     @Test
